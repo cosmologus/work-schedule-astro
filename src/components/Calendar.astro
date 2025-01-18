@@ -263,22 +263,6 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 		width: 100%; /* Ensure it takes up the full width of the day cell */
 	}
 
-	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		.calendar {
-			grid-template-columns: repeat(7, minmax(40px, 1fr)); /* Decrease min cell size for smaller screens */
-		}
-	}
-
-	@media (max-width: 480px) {
-		.calendar {
-			grid-template-columns: repeat(
-				7,
-				minmax(30px, 1fr)
-			); /* Further decrease min cell size for very small screens */
-		}
-	}
-
 	.today {
 		background-color: lightcoral;
 		border-radius: 50%;
