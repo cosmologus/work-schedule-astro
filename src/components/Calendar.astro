@@ -214,7 +214,6 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 		align-items: center; /* Center content horizontally */
 		aspect-ratio: 1 / 1; /* Keeps the cell square */
 		position: relative;
-		padding: 20px;
 	}
 
 	.half-right {
@@ -277,10 +276,6 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 				7,
 				minmax(30px, 1fr)
 			); /* Further decrease min cell size for very small screens */
-		}
-
-		.day {
-			padding: 20px; /* Minimize padding for very small screens */
 		}
 	}
 
