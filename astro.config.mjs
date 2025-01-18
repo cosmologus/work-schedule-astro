@@ -7,6 +7,6 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
     integrations: [tailwind()],
     site: 'https://cosmologus.github.io',
-    base: 'https://github.com/cosmologus/work-schedule-astro.git',
+    base: 'work-schedule-astro',
 });
 
