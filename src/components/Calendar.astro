@@ -11,23 +11,23 @@ interface ShiftDay {
 	type: string; // "day", "night-start", "night-end", "rest"
 }
 
-const dayShift: Shift = { start: "07:00", end: "19:00", color: "lightblue" };
-const nightShift: Shift = { start: "19:00", end: "07:00", color: "lightgray" };
+const dayShift: Shift = { start: '07:00', end: '19:00', color: 'lightblue' };
+const nightShift: Shift = { start: '19:00', end: '07:00', color: 'lightgray' };
 
-const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const months = [
-	"January",
-	"February",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December",
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
 ];
 
 let selectedYear = new Date().getFullYear();
@@ -35,6 +35,15 @@ let currentMonth = new Date().getMonth();
 let selectedMonth = 9; // October (0-indexed)
 let startYear = 2024;
 let firstDayShift = 16;
+
+const isToday = (date: Date): boolean => {
+	const today = new Date();
+	return (
+		date.getFullYear() === today.getFullYear() &&
+		date.getMonth() === today.getMonth() &&
+		date.getDate() === today.getDate()
+	);
+};
 
 // Helper functions
 function daysInMonth(month: number, year: number): number {
@@ -51,8 +60,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 	const referenceDate = new Date(startYear, 9, firstDayShift); // 16th of October, 2024
 	const currentMonthFirstDay = new Date(year, month, 1);
 	const daysSinceFirstShift = Math.floor(
-		(currentMonthFirstDay.getTime() - referenceDate.getTime()) /
-			(1000 * 60 * 60 * 24)
+		(currentMonthFirstDay.getTime() - referenceDate.getTime()) / (1000 * 60 * 60 * 24)
 	);
 	let patternOffset = ((daysSinceFirstShift % 4) + 4) % 4;
 
@@ -61,7 +69,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 
 	// Add empty cells for alignment
 	for (let i = 0; i < startDayOffset; i++) {
-		calendarDays.push({ date: new Date(year, month, i), type: "empty" });
+		calendarDays.push({ date: new Date(year, month, i), type: 'empty' });
 	}
 
 	// Fill calendar days with shifts
@@ -71,27 +79,27 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 				calendarDays.push({
 					date: new Date(year, month, currentDate),
 					shift: dayShift,
-					type: "day",
+					type: 'day',
 				});
 				break;
 			case 1:
 				calendarDays.push({
 					date: new Date(year, month, currentDate),
 					shift: nightShift,
-					type: "night-start",
+					type: 'night-start',
 				});
 				break;
 			case 2:
 				calendarDays.push({
 					date: new Date(year, month, currentDate),
 					shift: nightShift,
-					type: "night-end",
+					type: 'night-end',
 				});
 				break;
 			case 3:
 				calendarDays.push({
 					date: new Date(year, month, currentDate),
-					type: "rest",
+					type: 'rest',
 				});
 				break;
 		}
@@ -115,36 +123,33 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 					{weekdays.map((weekday) => (
 						<div class="day-header">{weekday}</div>
 					))}
-					{generateCalendar(index + currentMonth, selectedYear).map(
-						(day) => (
-							<div
-								class={`day ${
-									day.type === "day"
-										? "shift-day"
-										: day.type === "night-start" ||
-											  day.type === "night-end"
-											? ""
-											: day.type === "rest"
-												? "rest"
-												: "empty"
-								}`}
-							>
-								{day.type !== "empty" && (
-									<p>{day.date.getDate()}</p>
-								)}
-								{day.type === "night-start" && (
-									<div class="half-cell">
-										<div class="half-right" />
-									</div>
-								)}
-								{day.type === "night-end" && (
-									<div class="half-cell">
-										<div class="half-left" />
-									</div>
-								)}
-							</div>
-						)
-					)}
+					{generateCalendar(index + currentMonth, selectedYear).map((day) => (
+						<div
+							class={`day ${
+								day.type === 'day'
+									? 'shift-day'
+									: day.type === 'night-start' || day.type === 'night-end'
+										? ''
+										: day.type === 'rest'
+											? 'rest'
+											: 'empty'
+							}`}
+						>
+							{day.type !== 'empty' && (
+								<p class={`${isToday(day.date) ? 'today' : ''}`}>{day.date.getDate()}</p>
+							)}
+							{day.type === 'night-start' && (
+								<div class="half-cell">
+									<div class="half-right" />
+								</div>
+							)}
+							{day.type === 'night-end' && (
+								<div class="half-cell">
+									<div class="half-left" />
+								</div>
+							)}
+						</div>
+					))}
 				</div>
 			</>
 		))
@@ -164,25 +169,22 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 					{generateCalendar(index, selectedYear + 1).map((day) => (
 						<div
 							class={`day ${
-								day.type === "day"
-									? "shift-day"
-									: day.type === "night-start" ||
-										  day.type === "night-end"
-										? ""
-										: day.type === "rest"
-											? "rest"
-											: "empty"
+								day.type === 'day'
+									? 'shift-day'
+									: day.type === 'night-start' || day.type === 'night-end'
+										? ''
+										: day.type === 'rest'
+											? 'rest'
+											: 'empty'
 							}`}
 						>
-							{day.type !== "empty" && (
-								<p>{day.date.getDate()}</p>
-							)}
-							{day.type === "night-start" && (
+							{day.type !== 'empty' && <p>{day.date.getDate()}</p>}
+							{day.type === 'night-start' && (
 								<div class="half-cell">
 									<div class="half-right" />
 								</div>
 							)}
-							{day.type === "night-end" && (
+							{day.type === 'night-end' && (
 								<div class="half-cell">
 									<div class="half-left" />
 								</div>
@@ -198,12 +200,10 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 <style>
 	.calendar {
 		display: grid;
-		grid-template-columns: repeat(
-			7,
-			minmax(50px, 1fr)
-		); /* Responsive columns with a minimum width of 50px */
+		grid-template-columns: repeat(7, minmax(50px, 1fr)); /* Responsive columns with a minimum width of 50px */
 		gap: 5px;
-		margin: 20px;
+		margin: 10px;
+		padding-bottom: 50px;
 	}
 
 	.day {
@@ -267,10 +267,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
 		.calendar {
-			grid-template-columns: repeat(
-				7,
-				minmax(40px, 1fr)
-			); /* Decrease min cell size for smaller screens */
+			grid-template-columns: repeat(7, minmax(40px, 1fr)); /* Decrease min cell size for smaller screens */
 		}
 
 		.day {
@@ -289,5 +286,12 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 		.day {
 			padding: 2px; /* Minimize padding for very small screens */
 		}
+	}
+
+	.today {
+		background-color: lightcoral;
+		border-radius: 50%;
+		width: 30px !important;
+		height: 30px !important;
 	}
 </style>
