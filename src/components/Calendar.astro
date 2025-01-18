@@ -203,6 +203,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 		grid-template-columns: repeat(7, minmax(50px, 1fr)); /* Responsive columns with a minimum width of 50px */
 		gap: 5px;
 		margin: 20px;
+		padding-bottom: 40px;
 	}
 
 	.day {
@@ -213,7 +214,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 		align-items: center; /* Center content horizontally */
 		aspect-ratio: 1 / 1; /* Keeps the cell square */
 		position: relative;
-		padding: 10px;
+		padding: 20px;
 	}
 
 	.half-right {
@@ -267,10 +268,6 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 	@media (max-width: 768px) {
 		.calendar {
 			grid-template-columns: repeat(7, minmax(40px, 1fr)); /* Decrease min cell size for smaller screens */
-		}
-
-		.day {
-			padding: 5px; /* Adjust padding to make it fit better on smaller screens */
 		}
 	}
 
