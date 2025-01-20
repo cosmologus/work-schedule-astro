@@ -38,6 +38,7 @@ let firstDayShift = 16;
 
 const isToday = (date: Date): boolean => {
 	const today = new Date();
+	console.log(date, today);
 	return (
 		date.getFullYear() === today.getFullYear() &&
 		date.getMonth() === today.getMonth() &&
