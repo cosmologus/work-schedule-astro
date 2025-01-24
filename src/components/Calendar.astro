@@ -36,15 +36,14 @@ let selectedMonth = 9; // October (0-indexed)
 let startYear = 2024;
 let firstDayShift = 16;
 
-const isToday = (date: Date): boolean => {
-	const today = new Date();
-	console.log(date, today);
-	return (
-		date.getFullYear() === today.getFullYear() &&
-		date.getMonth() === today.getMonth() &&
-		date.getDate() === today.getDate()
-	);
-};
+// const isToday = (date: Date): boolean => {
+// 	const today = new Date();
+// 	return (
+// 		date.getFullYear() === today.getFullYear() &&
+// 		date.getMonth() === today.getMonth() &&
+// 		date.getDate() === today.getDate()
+// 	);
+// };
 
 // Helper functions
 function daysInMonth(month: number, year: number): number {
@@ -136,9 +135,7 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 											: 'empty'
 							}`}
 						>
-							{day.type !== 'empty' && (
-								<p class={`${isToday(day.date) ? 'today' : ''}`}>{day.date.getDate()}</p>
-							)}
+							{day.type !== 'empty' && <p>{day.date.getDate()}</p>}
 							{day.type === 'night-start' && (
 								<div class="half-cell">
 									<div class="half-right" />
