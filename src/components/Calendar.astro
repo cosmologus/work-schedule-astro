@@ -123,31 +123,40 @@ function generateCalendar(month: number, year: number): ShiftDay[] {
 					{weekdays.map((weekday) => (
 						<div class="day-header">{weekday}</div>
 					))}
-					{generateCalendar(index + currentMonth, selectedYear).map((day) => (
-						<div
-							class={`day ${
-								day.type === 'day'
-									? 'shift-day'
-									: day.type === 'night-start' || day.type === 'night-end'
-										? ''
-										: day.type === 'rest'
-											? 'rest'
-											: 'empty'
-							}`}
-						>
-							{day.type !== 'empty' && <p>{day.date.getDate()}</p>}
-							{day.type === 'night-start' && (
-								<div class="half-cell">
-									<div class="half-right" />
-								</div>
-							)}
-							{day.type === 'night-end' && (
-								<div class="half-cell">
-									<div class="half-left" />
-								</div>
-							)}
-						</div>
-					))}
+					{generateCalendar(index + currentMonth, selectedYear).map((day) => {
+						const today = new Date();
+						const isToday =
+							day.date &&
+							day.date.getFullYear() === today.getFullYear() &&
+							day.date.getMonth() === today.getMonth() &&
+							day.date.getDate() === today.getDate();
+
+						return (
+							<div
+								class={`day ${
+									day.type === 'day'
+										? 'shift-day'
+										: day.type === 'night-start' || day.type === 'night-end'
+											? ''
+											: day.type === 'rest'
+												? 'rest'
+												: 'empty'
+								}`}
+							>
+								{day.type !== 'empty' && <p class={isToday ? 'today' : ''}>{day.date.getDate()}</p>}
+								{day.type === 'night-start' && (
+									<div class="half-cell">
+										<div class="half-right" />
+									</div>
+								)}
+								{day.type === 'night-end' && (
+									<div class="half-cell">
+										<div class="half-left" />
+									</div>
+								)}
+							</div>
+						);
+					})}
 				</div>
 			</>
 		))
